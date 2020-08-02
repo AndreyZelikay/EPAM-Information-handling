@@ -3,7 +3,6 @@ package by.epam.info_handling.dao.impl;
 import by.epam.info_handling.dao.TextDao;
 import by.epam.info_handling.dao.exception.DaoException;
 import by.epam.info_handling.dao.reader.ProgrammingTextReader;
-import by.epam.info_handling.model.Sentence;
 import by.epam.info_handling.model.Text;
 import by.epam.info_handling.model.TextElement;
 
@@ -15,6 +14,7 @@ import java.util.Properties;
 public class TextDaoImpl implements TextDao {
 
     private ProgrammingTextReader reader;
+    private Text text;
 
     {
         Properties properties = new Properties();
@@ -30,6 +30,10 @@ public class TextDaoImpl implements TextDao {
 
     @Override
     public Text getText() {
+        if(text != null) {
+            return text;
+        }
+
         TextElement textElement;
         List<TextElement> elements = new LinkedList<>();
 
@@ -43,6 +47,8 @@ public class TextDaoImpl implements TextDao {
 
         Text text = new Text();
         text.setElements(elements);
+
+        this.text = text;
 
         return text;
     }

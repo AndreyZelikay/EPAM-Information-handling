@@ -1,7 +1,7 @@
 package by.epam.info_handling.service.impl;
 
+import by.epam.info_handling.dao.DaoFactory;
 import by.epam.info_handling.dao.TextDao;
-import by.epam.info_handling.dao.impl.TextDaoImpl;
 import by.epam.info_handling.model.Sentence;
 import by.epam.info_handling.model.Text;
 import by.epam.info_handling.model.Word;
@@ -13,10 +13,10 @@ import java.util.List;
 
 public class TextServiceImpl implements TextService {
 
-    private TextDao textDao;
+    private final TextDao textDao;
 
     public TextServiceImpl() {
-        this.textDao = new TextDaoImpl();
+        this.textDao = DaoFactory.getInstance().getTextDao();
     }
 
     @Override
