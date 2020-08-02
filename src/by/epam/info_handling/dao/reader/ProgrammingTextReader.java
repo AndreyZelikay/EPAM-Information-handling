@@ -11,9 +11,11 @@ import java.util.regex.Pattern;
 
 public class ProgrammingTextReader {
 
-    private static final String HEADING_REGEX = "^(\\d.)+?\\s+?.+?$";
-    private static final String CODE_BLOCK_REGEX = "(void|class) [A-Za-z]? (\\(.*?\\))?\\{.*?\\}";
-    private static final String SENTENCE_REGEX = "[A-Z]*?([.?:;])";
+    private static final String HEADING_REGEX = "(\\d.)+?\\s+?[A-Z].*?(\n|$)";
+    private static final String CLASS_REGEX = "class [A-Za-z]+ \\{(.|\\n)*?}\\n*(?=[A-Z])";
+    private static final String METHOD_REGEX = "void [A-Za-z]+?\\(.*?\\) \\{(.|\\n)*?}\\n*(?=[A-Z])";
+    private static final String CODE_BLOCK_REGEX = String.format("(%s)|(%s)", CLASS_REGEX, METHOD_REGEX);
+    private static final String SENTENCE_REGEX = "[A-Z][^{}]*?([.?:;!]|\n(?=[A-Z]))";
 
     private static final Pattern codeBlockPattern = Pattern.compile(CODE_BLOCK_REGEX);
     private static final Pattern headingPattern = Pattern.compile(HEADING_REGEX);
@@ -32,7 +34,7 @@ public class ProgrammingTextReader {
         String line;
 
         while((line = reader.readLine()) != null) {
-            buffer.append(line);
+            buffer.append(line).append("\n");
 
             matcher = codeBlockPattern.matcher(buffer.toString());
 

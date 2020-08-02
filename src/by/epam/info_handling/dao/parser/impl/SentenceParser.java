@@ -8,11 +8,11 @@ import java.util.List;
 
 public class SentenceParser implements Parser {
 
-    private static final String GET_WORDS_WITH_DELIMITERS_REGEX = "[ ,.;]<=?";
+    private static final String GET_WORDS_WITH_DELIMITERS_REGEX = "(?<=[ ,.;])";
 
     private static final String DELIMITERS_REGEX = "[ ,.;]";
 
-    private static final String WORDS_REGEX = "[\\w\\W]";
+    private static final String WORDS_REGEX = "\\w";
 
     public Sentence parse(String input) {
         Sentence sentence = new Sentence();

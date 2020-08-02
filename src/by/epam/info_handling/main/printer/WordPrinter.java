@@ -8,6 +8,8 @@ public class WordPrinter {
     }
 
     public static void print(Word data) {
-        System.out.println(data.getContent());
+        if(data != null) {
+            System.out.println(data.getContent());
+        }
     }
 }

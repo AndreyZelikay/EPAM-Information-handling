@@ -17,7 +17,13 @@ public class Text {
     }
 
     public String getInitialValue() {
-        return elements.stream().map(TextElement::getInitialValue).collect(Collectors.joining());
+        StringBuilder result = new StringBuilder();
+
+        for(TextElement element: elements) {
+            result.append(element.getInitialValue());
+        }
+
+        return result.toString();
     }
 
     public List<Sentence> getSentences() {
