@@ -1,28 +1,31 @@
 package by.epam.info_handling.main;
 
-import by.epam.info_handling.main.printer.SentencePrinter;
-import by.epam.info_handling.main.printer.TextPrinter;
-import by.epam.info_handling.main.printer.WordPrinter;
-import by.epam.info_handling.service.TextService;
-import by.epam.info_handling.service.impl.TextServiceImpl;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main {
 
     public static void main(String[] args) {
-        TextService textService = new TextServiceImpl();
+        try (ServerSocket serverSocket = new ServerSocket(8080);
+             Socket socket = serverSocket.accept()) {
 
-        WordPrinter.print(textService.findUniqueWordInFirstSentence());
+            PrintWriter writer = new PrintWriter(socket.getOutputStream());
 
-        System.out.println("--------------------------------------");
+            int status;
+            while ((status = SocketHandler.getInstance().handleSocket(socket)) != 0) {
 
-        textService.getSentencesWithRepeatedWords().forEach(SentencePrinter::print);
+                if(!socket.isConnected()) {
+                    socket = serverSocket.accept();
+                }
 
-        System.out.println("--------------------------------------");
-
-        textService.getSentencesInAscendingOrderOfWords().forEach(SentencePrinter::print);
-
-        System.out.println("--------------------------------------");
-
-        TextPrinter.print(textService.getText());
+                if (status == -1) {
+                    writer.println("no such controller");
+                    writer.flush();
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
