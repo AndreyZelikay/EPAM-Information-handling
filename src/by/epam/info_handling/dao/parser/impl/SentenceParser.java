@@ -1,10 +1,9 @@
 package by.epam.info_handling.dao.parser.impl;
 
 import by.epam.info_handling.dao.parser.Parser;
-import by.epam.info_handling.model.Delimiter;
-import by.epam.info_handling.model.PartOfSentence;
-import by.epam.info_handling.model.Sentence;
-import by.epam.info_handling.model.Word;
+import by.epam.info_handling.domain.entity.Sentence;
+import by.epam.info_handling.domain.entity.SentencePart;
+import by.epam.info_handling.domain.enumeration.SentencePartType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,17 +24,23 @@ public class SentenceParser implements Parser {
         return sentence;
     }
 
-    private List<PartOfSentence> getSentenceParts(String input) {
+    private List<SentencePart> getSentenceParts(String input) {
         Matcher matcher = pattern.matcher(input);
 
-        List<PartOfSentence> result = new LinkedList<>();
+        List<SentencePart> result = new LinkedList<>();
 
         while (matcher.find()) {
+            SentencePart sentencePart = new SentencePart();
+
             if (matcher.group(1) != null) {
-                result.add(new Word(matcher.group(1)));
+                sentencePart.setValue(matcher.group(1));
+                sentencePart.setType(SentencePartType.WORD);
             } else {
-                result.add(new Delimiter(matcher.group(2)));
+                sentencePart.setValue(matcher.group(2));
+                sentencePart.setType(SentencePartType.DELIMITER);
             }
+
+            result.add(sentencePart);
         }
 
         return result;

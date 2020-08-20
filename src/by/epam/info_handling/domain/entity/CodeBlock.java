@@ -1,13 +1,10 @@
-package by.epam.info_handling.model;
+package by.epam.info_handling.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CodeBlock implements TextElement {
+public class CodeBlock implements TextElement, Serializable {
     private String textContent;
-
-    public String getTextContent() {
-        return textContent;
-    }
 
     public void setTextContent(String textContent) {
         this.textContent = textContent;

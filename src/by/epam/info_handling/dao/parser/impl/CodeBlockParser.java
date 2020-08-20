@@ -1,6 +1,6 @@
 package by.epam.info_handling.dao.parser.impl;
 
-import by.epam.info_handling.model.CodeBlock;
+import by.epam.info_handling.domain.entity.CodeBlock;
 import by.epam.info_handling.dao.parser.Parser;
 
 public class CodeBlockParser implements Parser {

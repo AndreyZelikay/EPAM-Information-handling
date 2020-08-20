@@ -3,8 +3,8 @@ package by.epam.info_handling.dao.impl;
 import by.epam.info_handling.dao.TextDao;
 import by.epam.info_handling.dao.exception.DaoException;
 import by.epam.info_handling.dao.reader.ProgrammingTextReader;
-import by.epam.info_handling.model.Text;
-import by.epam.info_handling.model.TextElement;
+import by.epam.info_handling.domain.entity.Text;
+import by.epam.info_handling.domain.entity.TextElement;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -45,10 +45,8 @@ public class TextDaoImpl implements TextDao {
             throw new DaoException("can not read text " + e.getMessage());
         }
 
-        Text text = new Text();
+        this.text = new Text();
         text.setElements(elements);
-
-        this.text = text;
 
         return text;
     }

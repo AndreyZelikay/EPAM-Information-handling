@@ -1,38 +1,29 @@
-package by.epam.info_handling.model;
+package by.epam.info_handling.domain.entity;
 
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Sentence implements TextElement {
-    private List<PartOfSentence> sentenceParts;
+public class Sentence implements TextElement, Serializable {
 
-    public List<PartOfSentence> getSentenceParts() {
+    private static final long serialVersionUID = 1L;
+
+    private List<SentencePart> sentenceParts;
+
+    public List<SentencePart> getSentenceParts() {
         return sentenceParts;
     }
 
-    public void setSentenceParts(List<PartOfSentence> sentenceParts) {
+    public void setSentenceParts(List<SentencePart> sentenceParts) {
         this.sentenceParts = sentenceParts;
-    }
-
-    public List<Word> getWords(){
-        List<Word> words = new LinkedList<>();
-
-        for(PartOfSentence part: sentenceParts) {
-            if(part instanceof Word) {
-                words.add((Word) part);
-            }
-        }
-
-        return words;
     }
 
     @Override
     public String getInitialValue() {
         StringBuilder result = new StringBuilder();
 
-        for(PartOfSentence part : sentenceParts) {
-            result.append(part.getContent());
+        for (SentencePart part : sentenceParts) {
+            result.append(part.getValue());
         }
 
         return result.toString();

@@ -1,7 +1,7 @@
-package by.epam.info_handling.main.controller;
+package by.epam.info_handling.web.controller;
 
-import by.epam.info_handling.main.controller.impl.ControllerImpl;
-import by.epam.info_handling.main.controller.impl.TextController;
+import by.epam.info_handling.web.controller.impl.ControllerImpl;
+import by.epam.info_handling.web.controller.impl.TextController;
 
 import java.util.HashMap;
 import java.util.Map;

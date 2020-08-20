@@ -1,7 +1,6 @@
-package by.epam.info_handling.main.controller.impl;
+package by.epam.info_handling.web.controller.impl;
 
-import by.epam.info_handling.model.Sentence;
-import by.epam.info_handling.model.Word;
+import by.epam.info_handling.domain.entity.Sentence;
 import by.epam.info_handling.service.TextService;
 import by.epam.info_handling.service.impl.TextServiceImpl;
 
@@ -17,25 +16,12 @@ public class TextController extends ControllerImpl {
     }
 
     @Override
-    public void service(InputStream in, OutputStream out) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-        String request = reader.readLine();
-
-        switch (request) {
-            case "sentence with repeated words":
-                sentencesWithRepeatedWords(out);
-                break;
-            case "stop":
-                return;
-            case "sentences in ascending order of words":
-                sentencesInAscendingOrderOfWords(out);
-                break;
-            case "unique word in first sentence" :
-                uniqueWordInFirstSentence(out);
-                break;
-            default:
-               super.handleBadRequest(out);
+    public void service(String controllerMethodName, OutputStream out) throws IOException {
+        switch (controllerMethodName) {
+            case "sentences with repeated words" -> sentencesWithRepeatedWords(out);
+            case "sentences in ascending order of words" -> sentencesInAscendingOrderOfWords(out);
+            case "unique word in first sentence" -> uniqueWordInFirstSentence(out);
+            default -> super.handleBadRequest(out);
         }
     }
 
@@ -49,7 +35,7 @@ public class TextController extends ControllerImpl {
     }
 
     private void uniqueWordInFirstSentence(OutputStream out) throws IOException {
-        Word word = textService.findUniqueWordInFirstSentence();
+        String word = textService.findUniqueWordInFirstSentence();
 
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
 
@@ -60,9 +46,13 @@ public class TextController extends ControllerImpl {
     private void sentencesWithRepeatedWords(OutputStream out) throws IOException {
         List<Sentence> sentences = textService.getSentencesWithRepeatedWords();
 
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
+        ObjectOutput objectOutputStream = new ObjectOutputStream(out);
 
-        objectOutputStream.writeObject(sentences);
-        objectOutputStream.flush();
+        try {
+            objectOutputStream.writeObject(sentences);
+            objectOutputStream.flush();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

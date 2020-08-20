@@ -1,8 +1,7 @@
 package by.epam.info_handling.service;
 
-import by.epam.info_handling.model.Sentence;
-import by.epam.info_handling.model.Text;
-import by.epam.info_handling.model.Word;
+import by.epam.info_handling.domain.entity.Sentence;
+import by.epam.info_handling.domain.entity.Text;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ public interface TextService {
 
     List<Sentence> getSentencesInAscendingOrderOfWords();
 
-    Word findUniqueWordInFirstSentence();
+    String findUniqueWordInFirstSentence();
 }

@@ -1,12 +1,12 @@
-package by.epam.info_handling.model;
+package by.epam.info_handling.domain.entity;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class Text {
-    private List<TextElement> elements;
+public class Text implements Serializable {
+    private transient List<TextElement> elements;
 
     public List<TextElement> getElements() {
         return elements;
